@@ -1,0 +1,19 @@
+What if the Telegram monitoring system would be executed completely manually by a analogous clerk:
+
+(Simplified system: one set of patterns that applies to all channels and groups, only one strategy for checking for pattern matches).
+
+We need the following:
+
+- List with channels and groups
+- List with patterns to look out for
+- An email address to notify when a pattern matches
+- We are logged in to Telegram with a Telegram account (phone number)
+
+Operations (directives to the clerk):
+
+- Add channel or group to the list
+- Remove channel or group from the list
+- Add pattern to the list
+- Remove pattern from the list
+- Change email address to notify
+- Change Telegram account (log out from current account and log in with new account)

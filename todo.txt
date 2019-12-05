@@ -1,0 +1,15 @@
+Replace the default guest/guest administrator user with a new administrator user that has a safe password.
+
+1. Create new administrator user
+- Similar to creating an ordinary user, but you have to set the `adminstrator` tag:
+  - PUT /api/users/name
+  - Basic authentication: guest:guest
+  - Body: `{"password":"secret","tags":"administrator"}`
+- Only users with the `administrator` tag can manage (create/delete) other users, vhosts, and permissions
+- If you attempt to create/delete a user/vhost/permission with a user without the `administrator` tag, the response is `401 Unauthorized`
+- The user that you use to create a vhost automatically gets access to this vhost
+2. Delete the default guest/guest user
+- DELETE /api/users/guest
+- Basic authentication: admin:secret
+- Body: none
+

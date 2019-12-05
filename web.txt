@@ -1,0 +1,16 @@
+web:
+
+User signup:
+  - User signs up with email and password
+  - Create new vhost on RabbitMQ server in rabbitmq pod
+    - curl -i -u guest:guest -H "content-type:application/json" -XPUT http://rabbitmq-service:15672/api/vhosts/foobar (see https://cdn.rawgit.com/rabbitmq/rabbitmq-management/v3.7.7/priv/www/api/index.html)
+  - This gives a new AMQP URI: amqp://rabbitmq-service/foobar
+  - Persistently save AMQP URI for this user
+  - Create a new core deployment in the Kubernetes cluster, initialised with this user's AMQP URI
+    - Use this JavaScript Kubernetes client: https://github.com/kubernetes-client/javascript
+  - Connect to RabbitMQ servrer and start communicating with core
+
+User signin:
+  - User signs in with email and password
+  - Retrieve this user's AMQP URI
+  - Connect to RabbitMQ server and start communicating with core

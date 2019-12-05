@@ -1,0 +1,18 @@
+PatternMatching component
+
+You have to do 3 things:
+
+- Implement ai.quantumsense.tgmonitor.backend.PatternMatcher
+    - The newMessage() method gives you a newly received message to check for pattern matches.
+    - Do with this message whatever is needed for your pattern matching approach, e.g. save it in a database along with the previously received messages, or check it on the spot for pattern matches and then discard it, etc.
+- Do pattern matching on all the received messages
+    - It is up to you how the pattern matching is done. Only condition is that all matches of the current list of patterns are found in a sensible way over all the received messages.
+    - The simplest form of pattern matching would certainly be to simply do a substring search of all the patterns in every new message received by newMessage() and then discard the new message. This can be a starting point for more sophisticated forms of pattern matching, e.g. taking into account conversations spanning multiple messages (semantic search), or analysing hyperlinks or images in messages.
+    - Get the current list of patterns from ai.quantumsense.tgmonitor.monitor.Monitor.getPatterns()
+- Call ai.quantumsense.tgmonitor.backend.Interactor.matchFound() for every detected pattern match.
+    - Passing it a PatternMatch object containing all the information about the match.
+
+You will need the following data structures:
+
+- ai.quantumsense.tgmonitor.backend.datastructures.TelegramMessage
+- ai.quantumsense.tgmonitor.backend.datastructures.PatternMatch

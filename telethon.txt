@@ -1,0 +1,10 @@
+Telethon component
+
+You need to do 2 things:
+
+- Implement ai.quantumsense.tgmonitor.backend.Telegram
+- For every new message that is received in one of the monitored peers, call ai.quantumsense.tgmonitor.backend.Interactor.messageReceived()
+
+You will need the following data structures:
+
+- ai.quantumsense.tgmonitor.backend.datastructures.TelegramMessage

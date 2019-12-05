@@ -1,0 +1,35 @@
+- Create a new IAM user and try to access the test-cluster with this user => should be denied by the API server
+
+- Execute 'aws-iam-authenticator token' in a Lambda function and check which AWS IAM identity it uses (execute 'aws sts get-caller-identity' in Lambda function)
+
+I think there is no ~/.aws/credentials in the Lambda environment. So, can aws-iam-authenticator get the current IAM identity in some other way? Is it the role of the Lambda function?
+==> 'aws-iam-authenticator token' calls the sts:GetCallerIdentity API endpoint to determine the current AWS identity. This identity is then included in the token that is sent to the server.
+
+Which identity is it? For EC2 instances: "if you use IAM roles for Amazon EC2 instances, your applications automatically use the instance's credentials" (https://docs.aws.amazon.com/sdk-for-go/v1/developer-guide/configuring-sdk.html#specifying-credentials). Probably for Lambda functions this is the same, and the used identity is the Lambada function role.
+
+Generate a token: aws-iam-authenticator token -i foo | jq -r '.status|.token'
+This is what the client (kubectl or a client library) submits to the API server.
+
+Decode the token: aws-iam-authenticator verify -i foobar -t "$token"
+This is done by the aws-iam-authenticator in the EKS control plane.
+
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: aws-auth
+  namespace: kube-system
+data:
+  mapRoles: |
+    - rolearn: <ARN of instance role (not instance profile)>
+      username: system:node:{{EC2PrivateDNSName}}
+      groups:
+        - system:bootstrappers
+        - system:nodes
+
+MTP Hostname
+smtp.mailgun.org
+Default SMTP Login
+postmaster@quantumsense.ai
+Default Password
+85640840f017434dcb1033c70d6c3362

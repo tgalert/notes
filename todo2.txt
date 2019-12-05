@@ -1,0 +1,53 @@
+To do tomorrow (16.10):
+
+1)
+- Create a test cluster on GKE
+    - gcloud container clusters create test-cluster
+- Deploy a RabbitMQ deployment and service (to make it accessible from outside the cluster) on this cluster.
+- Deploy "core" Docker image (https://hub.docker.com/r/weibeld/tg-monitor/) on cluster.
+    - This one can access the RabbitMQ pod through the LoadBalancer service as if it would be a ClusterIP service (i.e. through the internal DNS name equalling the name of the service)
+- Test it with the CLI ==> This works!
+- Test it with the web UI (tgalert)
+
+===
+I pushed the latest versions of weibeld/tg-monitor:core-0.0.1 and weibeld/tg-monitor:cli-0.0.1 to Docker Hub.
+
+To run the core and RabbitMQ on a Kubernetes cluster, just apply the Kubernetes files in ~/Desktop/tgsearch-k8s.
+
+To run the CLI, run:
+
+docker run --rm -ti \
+  -v /Users/dw/Desktop/cli:/var/log \
+  -e AMQP_URI=amqp://35.231.147.250 \
+  weibeld/tg-monitor:cli-0.0.1
+
+Just replace the IP address in the AMQP URI with the external IP address of the cluster LoadBalancer.
+===
+
+===
+The next step is to create code that creates a Kubernetes deployment and configures the RabbitMQ server from outside the cluster (see below). This code could eventually run as an AWS Lambda function.
+===
+
+
+2)
+- Start using the Kubernetes Java client (https://github.com/kubernetes-client/java/)
+- Check how to use the Java client to create an additional deployment of the "core" on the cluster.
+- Check how to create a queue or vhost and user on RabbitMQ in the cluster (from outside the cluster)
+
+3)
+- Check how AWS Lambda works
+- Can (2) be done from an AWS Lambda function?
+
+
+Cognito:
+|     Also, change back to old Cognito user pool with "sign up with username"
+|     attributes, and using the email address as username.
+|     
+|     This is because for the 'forgotPassword' request, we have to submit the
+|     username of a user, it doesn't work with the email address. And in the
+|     old user pool, the username of a user is automatically set to the
+|     users's "sub" ID, which we don't know.
+|     
+|     So, it's just more practical to use the old default user pool and
+|     manually set the email address for both the username and email
+|     attributes.

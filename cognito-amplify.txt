@@ -1,0 +1,11 @@
+- AWS Cognito starter app for Angular: https://github.com/awslabs/aws-cognito-angular-quickstart
+    - This one uses the old Cognito JavaScript SDK
+    - See disussion here: https://github.com/awslabs/aws-cognito-angular-quickstart/issues/24
+    - Should replace Cognito interaction with Amplify
+- Two ways to interact with Amazon Cognito: https://github.com/aws-amplify/amplify-js/issues/19#issuecomment-346485848
+    1. JavaScript SDK
+    2. AWS Amplify
+- There is one Amplify starter app for Angular: https://github.com/aws-samples/aws-mobile-appsync-chat-starter-angular
+    - Amplify was originally built for React, but support for Angular is being added: https://hackernoon.com/aws-amplify-7-new-things-for-serverless-63ecad310d9f
+- Video showing how to use Amplify Authentication with a React app: https://www.youtube.com/watch?v=uiTQL7Ne8rY
+- Older video about AWS Amplify: https://www.youtube.com/watch?v=vAjf3lyjf8c
